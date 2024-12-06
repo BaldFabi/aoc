@@ -18,13 +18,13 @@ func stringToInt(s string) int {
 	return i
 }
 
-func numberIsValid(rules [][]int, n []int) bool {
+func numberIsValid(rules map[int][]int, n []int) bool {
 	var validCombinations int
 	l := len(n) - 1
 
 	for i := 0; i < l; i++ {
-		for _, r := range rules {
-			if n[i] == r[0] && n[i+1] == r[1] {
+		for _, r := range rules[n[i]] {
+			if n[i+1] == r {
 				validCombinations += 1
 				break
 			}
@@ -35,7 +35,7 @@ func numberIsValid(rules [][]int, n []int) bool {
 }
 
 func main() {
-	rules := [][]int{}
+	rules := map[int][]int{}
 	numbers := [][]int{}
 
 	var i int
@@ -46,7 +46,7 @@ func main() {
 
 		if strings.Contains(l, "|") {
 			s := strings.Split(l, "|")
-			rules = append(rules, []int{stringToInt(s[0]), stringToInt(s[1])})
+			rules[stringToInt(s[0])] = append(rules[stringToInt(s[0])], stringToInt(s[1]))
 		}
 
 		if strings.Contains(l, ",") {
