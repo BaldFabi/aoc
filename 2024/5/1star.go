@@ -22,8 +22,8 @@ func numberIsValid(rules [][]int, n []int) bool {
 	var validCombinations int
 	l := len(n) - 1
 
-	for _, r := range rules {
-		for i := 0; i < l; i++ {
+	for i := 0; i < l; i++ {
+		for _, r := range rules {
 			if n[i] == r[0] && n[i+1] == r[1] {
 				validCombinations += 1
 				break
