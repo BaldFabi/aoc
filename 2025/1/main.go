@@ -3,7 +3,6 @@ package main
 import (
 	_ "embed"
 	"fmt"
-	"math"
 	"strconv"
 	"strings"
 )
@@ -77,7 +76,7 @@ func star2() {
 		previousPosition := currentPosition
 
 		//fmt.Println("Current Position:", currentPosition, "Direction:", direction, "Clicks:", clicks)
-		hitZero += int(math.Floor(float64(clicks) / 100.0))
+		hitZero += clicks / 100
 		clicks = clicks % 100
 
 		switch direction {
