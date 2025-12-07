@@ -2,6 +2,7 @@ package main
 
 import (
 	_ "embed"
+	"fmt"
 	"strings"
 )
 
@@ -26,4 +27,14 @@ func iterateRows(fileContent string, f func(row string)) {
 }
 
 func main() {
+	star1()
+	star2()
+}
+
+func star1() {
+	fmt.Println("Star 1:")
+}
+
+func star2() {
+	fmt.Println("Star 2:")
 }
