@@ -44,7 +44,6 @@ func star1() {
 			if char > firstHighestNumber {
 				firstHighestNumber = char
 				secondHighestNumber = 0
-				//highestIndex = i
 			} else if char > secondHighestNumber {
 				secondHighestNumber = char
 			}
@@ -67,5 +66,10 @@ func star1() {
 }
 
 func star2() {
-	fmt.Println("Star 2:")
+	joltage := 0
+
+	iterateRows(sample, func(row string) {
+	})
+
+	fmt.Println("Star 2:", joltage)
 }
