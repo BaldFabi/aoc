@@ -70,5 +70,73 @@ func star1() {
 
 func star2() {
 	invalidSum := 0
+
+	iterateRange(input, func(from, to int) {
+		for i := from; i <= to; i++ {
+			iStr := strconv.Itoa(i)
+			length := len(iStr)
+			if length == 1 {
+				continue
+			}
+
+			halfLength := length / 2
+
+			// --- 11111
+
+			identical := true
+			for n := 1; n < length; n++ {
+				if iStr[0] != iStr[n] {
+					identical = false
+					break
+				}
+			}
+
+			if identical {
+				invalidSum += i
+				continue
+			}
+
+			// --- 1212
+
+			firstHalf := iStr[0:halfLength]
+			secondHalf := iStr[halfLength:]
+
+			if firstHalf == secondHalf {
+				invalidSum += i
+				continue
+			}
+
+			// --- 121212 | 824824824
+
+			for n := 2; n < halfLength; n++ {
+				if length%n != 0 {
+					continue
+				}
+
+				identical := true
+				firstSequence := iStr[0:n]
+
+				tempHalfLength := halfLength
+				if n > 2 {
+					tempHalfLength -= 1
+				}
+
+				for m := n - (n%2 + 1); m < tempHalfLength; m++ {
+					index := m * n
+					thisSequence := iStr[index : index+n]
+					if firstSequence != thisSequence {
+						identical = false
+						break
+					}
+				}
+
+				if identical {
+					invalidSum += i
+				}
+
+			}
+		}
+	})
+
 	fmt.Println("Star 2:", invalidSum)
 }
