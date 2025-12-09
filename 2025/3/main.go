@@ -35,6 +35,7 @@ func main() {
 func star1() {
 	joltage := 0
 
+	// should be refactored to use logic of star 2
 	iterateRows(input, func(row string) {
 		var firstHighestNumber rune
 		var secondHighestNumber rune
@@ -68,8 +69,41 @@ func star1() {
 func star2() {
 	joltage := 0
 
-	iterateRows(sample, func(row string) {
+	iterateRows(input, func(row string) {
+		var index int
+		var j string
+
+		for i := 11; i >= 0; i-- {
+			newRow := row[index : len(row)-i]
+			newIndex, highestNumber := findHighestNumber(newRow)
+			index += newIndex
+			j += highestNumber
+
+			fmt.Println("New row:", newRow, "Index:", index, "Highest number:", highestNumber)
+		}
+
+		joltageRow, err := strconv.Atoi(j)
+		if err != nil {
+			panic(err)
+		}
+		joltage += joltageRow
+
+		fmt.Println("Row joltage:", j, joltageRow)
 	})
 
 	fmt.Println("Star 2:", joltage)
+}
+
+func findHighestNumber(row string) (int, string) {
+	var highestNumber rune
+	var index int
+
+	for i, number := range row {
+		if number > highestNumber {
+			highestNumber = number
+			index = i
+		}
+	}
+
+	return index + 1, string(highestNumber)
 }
