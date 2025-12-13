@@ -102,19 +102,7 @@ func star2() {
 		ranges = append(ranges, []int{start, end})
 	})
 
-	//for {
-	//consolidated := consolidateRanges(ranges)
-	//if reflect.DeepEqual(consolidated, ranges) {
-	//ranges = consolidated
-	//break
-	//}
-	//ranges = consolidated
-	//}
-	fmt.Printf("Original ranges: %+v\n\n\n", ranges)
-
 	ranges = clearRanges(ranges)
-
-	fmt.Printf("Consolidated ranges: %+v\n", ranges)
 
 	for _, r := range ranges {
 		countFreshIDs += r[1] - r[0] + 1
@@ -134,23 +122,25 @@ func clearRanges(ranges [][]int) [][]int {
 	var clearedRanges [][]int
 	length := len(ranges)
 
-	for i := 0; i < length-1; i++ {
-		if ranges[i][1] < ranges[i+1][0] {
-			clearedRanges = append(clearedRanges, ranges[i])
-			continue
-		}
-
+	for i := 0; i < length; i++ {
 		var start, end int
 
 		start = ranges[i][0]
 		end = ranges[i][1]
 
-		for j := i + 1; j < length-1; j++ {
-			if end > ranges[j][1] && end > ranges[j+1][0] {
-				continue
+		for j := i + 1; j < length; j++ {
+			nextStart := ranges[j][0]
+			nextEnd := ranges[j][1]
+
+			if end < nextStart {
+				i = j - 1
+				break
 			}
 
-			end = ranges[j][1]
+			if nextEnd > end {
+				end = nextEnd
+			}
+			i = j
 		}
 
 		clearedRanges = append(clearedRanges, []int{start, end})
