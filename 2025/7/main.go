@@ -33,8 +33,29 @@ func main() {
 	star2(sample)
 }
 
+// 1770 ^
+
 func star1(data string) {
-	fmt.Println("Star 1:")
+	var beamSplits int
+	var startI int
+
+	iterateRows(data, func(rowLen int, rI int, row string) {
+		for cI, char := range row {
+			if rI == 0 {
+				if char == 'S' {
+					startI = cI
+					break
+				}
+			}
+
+			if char == '.' {
+				continue
+			}
+
+		}
+	})
+
+	fmt.Println("Star 1:", beamSplits)
 }
 
 func star2(data string) {
