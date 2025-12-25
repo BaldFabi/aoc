@@ -29,29 +29,40 @@ func iterateRows(fileContent string, f func(int, int, string)) {
 }
 
 func main() {
-	star1(sample)
+	star1(input)
 	star2(sample)
 }
 
-// 1770 ^
-
 func star1(data string) {
 	var beamSplits int
-	var startI int
+	rows := rows(data)
 
-	iterateRows(data, func(rowLen int, rI int, row string) {
+	iterateRows(data, func(rowLen, i int, row string) {
+		if i == 0 {
+			return
+		}
+
 		for cI, char := range row {
-			if rI == 0 {
-				if char == 'S' {
-					startI = cI
-					break
-				}
-			}
-
-			if char == '.' {
+			if cI == 0 || cI == len(row)-1 {
 				continue
 			}
 
+			above := rows[i-1][cI]
+
+			if char == '.' {
+				if above == '|' || above == 'S' {
+					rows[i] = rows[i][:cI] + "|" + rows[i][cI+1:]
+				}
+
+				continue
+			}
+
+			if above == '|' {
+				beamSplits++
+
+				rows[i] = rows[i][:cI-1] + "|" + rows[i][cI:]
+				rows[i] = rows[i][:cI+1] + "|" + rows[i][cI+2:]
+			}
 		}
 	})
 
