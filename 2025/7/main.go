@@ -30,7 +30,7 @@ func iterateRows(fileContent string, f func(int, int, string)) {
 
 func main() {
 	star1(input)
-	star2(sample)
+	star2(input)
 }
 
 func star1(data string) {
@@ -70,5 +70,32 @@ func star1(data string) {
 }
 
 func star2(data string) {
-	fmt.Println("Star 2:")
+	var cols []int
+	var sum int
+
+	iterateRows(data, func(rowLen, i int, row string) {
+		if i%2 == 1 {
+			return
+		}
+
+		for cI, char := range row {
+			if char == '.' {
+				continue
+			} else if char == 'S' {
+				cols = make([]int, len(row))
+				cols[cI] = 1
+				break
+			}
+
+			cols[cI+1] += cols[cI]
+			cols[cI-1] += cols[cI]
+			cols[cI] = 0
+		}
+	})
+
+	for _, c := range cols {
+		sum += c
+	}
+
+	fmt.Println("Star 2:", sum)
 }
